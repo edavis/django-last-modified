@@ -15,12 +15,6 @@ CACHE_MAX_AGE                    = getattr(settings, 'CACHE_MAX_AGE', 3600) # on
 CACHE_SHARED_MAX_AGE             = getattr(settings, 'CACHE_SHARED_MAX_AGE', CACHE_MAX_AGE)
 
 class CacheControlMiddleware(object):
-    """
-    Middleware to add 'freshness' headers to responses.
-
-    Read <http://www.mnot.net/cache_docs/> for a good overview of
-    'freshness' as it applies to HTTP caching.
-    """
     def __init__(self):
         if DISABLE_CACHE_CONTROL_MIDDLEWARE:
             raise MiddlewareNotUsed
@@ -49,10 +43,6 @@ class CacheControlMiddleware(object):
         return response
 
 class BaseModifiedMiddleware(object):
-    """
-    Base class for middleware adding 'Last-Modified' header and
-    checking 'If-Modified-Since' header.
-    """
     def __init__(self):
         if DISABLE_LAST_MODIFIED_MIDDLEWARE:
             raise MiddlewareNotUsed
@@ -94,10 +84,7 @@ class BaseModifiedMiddleware(object):
 
 class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
     """
-    Middleware for checking the 'Last-Modified' header.
-
-    Put this near the top -- but after auth and session -- of
-    MIDDLEWARE_CLASSES for maximum benefit.
+    Middleware for checking the 'If-Modified-Since' header.
     """
     def process_request(self, request):
         """
@@ -127,14 +114,8 @@ class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
 
 class LastModifiedMiddleware(BaseModifiedMiddleware):
     """
-    Middleware for adding the 'Last-Modified' header.
+    Middleware for setting the 'Last-Modified' header.
     """
     def process_response(self, request, response):
-        """
-        Add a `Last-Modified` header to each response.
-
-        The value of `Last-Modified` is self.last_modified formatted
-        per the HTTP spec.
-        """
         response['Last-Modified'] = http_date(self.last_modified)
         return response
