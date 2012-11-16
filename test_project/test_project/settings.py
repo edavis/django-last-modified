@@ -95,6 +95,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
+LAST_MODIFIED_FUNC = 'test_project.utils.last_modified'
+
 ROOT_URLCONF = 'test_project.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
