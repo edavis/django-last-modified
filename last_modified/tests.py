@@ -15,8 +15,7 @@ CACHE_CONTROL_MIDDLEWARE_CLASSES = [
 LAST_MODIFIED_MIDDLEWARE_CLASSES = [
     'django.middleware.common.CommonMiddleware',
 
-    # session and auth need to be before 'IfModifiedSince' for the
-    # auth check to work.
+    # session and auth before LastModifiedMiddleware
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
