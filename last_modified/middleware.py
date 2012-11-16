@@ -42,7 +42,7 @@ class CacheControlMiddleware(object):
         response['Expires'] = http_date(time.time() + CACHE_MAX_AGE)
         return response
 
-class BaseModifiedMiddleware(object):
+class LastModifiedMiddleware(object):
     def __init__(self):
         if DISABLE_LAST_MODIFIED_MIDDLEWARE:
             raise MiddlewareNotUsed
@@ -82,10 +82,7 @@ class BaseModifiedMiddleware(object):
         value = self.last_modified_func()
         return self._convert_to_timestamp(value)
 
-class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
-    """
-    Middleware for checking the 'If-Modified-Since' header.
-    """
+    ###########################################################################
     def process_request(self, request):
         """
         Compare 'If-Modified-Since' to the last modified time.
@@ -112,10 +109,6 @@ class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
             if self.last_modified <= if_modified_since:
                 return HttpResponseNotModified()
 
-class LastModifiedMiddleware(BaseModifiedMiddleware):
-    """
-    Middleware for setting the 'Last-Modified' header.
-    """
     def process_response(self, request, response):
         response['Last-Modified'] = http_date(self.last_modified)
         return response

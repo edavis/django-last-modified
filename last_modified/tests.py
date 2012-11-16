@@ -20,7 +20,7 @@ LAST_MODIFIED_MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 
-    'last_modified.middleware.IfModifiedSinceMiddleware',
+    'last_modified.middleware.LastModifiedMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'last_modified.middleware.LastModifiedMiddleware',
