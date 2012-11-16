@@ -11,7 +11,7 @@ from django.views.decorators.cache import patch_cache_control
 DISABLE_LAST_MODIFIED_MIDDLEWARE = getattr(settings, 'DISABLE_LAST_MODIFIED_MIDDLEWARE', False)
 DISABLE_CACHE_CONTROL_MIDDLEWARE = getattr(settings, 'DISABLE_CACHE_CONTROL_MIDDLEWARE', False)
 LAST_MODIFIED_FUNC               = getattr(settings, 'LAST_MODIFIED_FUNC', None)
-CACHE_MAX_AGE                    = getattr(settings, 'CACHE_MAX_AGE', 3600) # one day
+CACHE_MAX_AGE                    = getattr(settings, 'CACHE_MAX_AGE', 3600) # one hour
 CACHE_SHARED_MAX_AGE             = getattr(settings, 'CACHE_SHARED_MAX_AGE', CACHE_MAX_AGE)
 
 class CacheControlMiddleware(object):
