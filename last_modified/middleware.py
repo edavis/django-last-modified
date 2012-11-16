@@ -63,10 +63,12 @@ class BaseModifiedMiddleware(object):
         """
         Return the function object defined by LAST_MODIFIED_FUNC.
         """
-        if LAST_MODIFIED_FUNC is None:
+        path = LAST_MODIFIED_FUNC
+
+        if path is None:
             raise ImproperlyConfigured("LAST_MODIFIED_FUNC has not been set.")
 
-        i = LAST_MODIFIED_FUNC.rfind('.')
+        i = path.rfind('.')
         module, attr = path[:i], path[i+1:]
         try:
             mod = import_module(module)
