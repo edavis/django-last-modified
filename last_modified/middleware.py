@@ -110,8 +110,11 @@ class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
         possible.
         """
         # If request comes from an authenticated user, don't return 304
-        if request.user.is_authenticated():
-            return
+        try:
+            if request.user.is_authenticated():
+                return
+        except AttributeError:
+            pass
 
         if_modified_since = request.META.get('HTTP_IF_MODIFIED_SINCE')
 
