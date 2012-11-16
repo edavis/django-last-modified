@@ -42,7 +42,7 @@ class CacheControlMiddleware(object):
         """
         params = dict(
             max_age = CACHE_MAX_AGE,
-            s_maxage = SHARED_CACHE_MAX_AGE,
+            s_maxage = CACHE_SHARED_MAX_AGE,
         )
         patch_cache_control(response, **params)
         response['Expires'] = http_date(time.time() + CACHE_MAX_AGE)
