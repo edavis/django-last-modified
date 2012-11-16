@@ -96,7 +96,8 @@ class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
     """
     Middleware for checking the 'Last-Modified' header.
 
-    Put this near the top of MIDDLEWARE_CLASSES for maximum benefit.
+    Put this near the top -- but after auth and session -- of
+    MIDDLEWARE_CLASSES for maximum benefit.
     """
     def process_request(self, request):
         """
@@ -105,9 +106,6 @@ class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
         The goal of this is to quickly return HttpResponseNotModified
         if the value in 'If-Modified-Since' is greater than or equal
         to the last modified datetime.
-
-        Put this early in MIDDLEWARE_CLASSES to bail as quickly as
-        possible.
         """
         # If request comes from an authenticated user, don't return 304
         try:
@@ -128,8 +126,6 @@ class IfModifiedSinceMiddleware(BaseModifiedMiddleware):
 class LastModifiedMiddleware(BaseModifiedMiddleware):
     """
     Middleware for adding the 'Last-Modified' header.
-
-    Put this near the bottom of MIDDLEWARE_CLASSES.
     """
     def process_response(self, request, response):
         """
