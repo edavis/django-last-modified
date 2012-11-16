@@ -1,16 +1,10 @@
 import time
-import calendar
-import datetime
 from django.conf import settings
-from django.core.exceptions import MiddlewareNotUsed, ImproperlyConfigured
-from django.http import HttpResponseNotModified
-from django.utils.http import http_date, parse_http_date_safe
-from django.utils.importlib import import_module
+from django.core.exceptions import MiddlewareNotUsed
+from django.utils.http import http_date
 from django.views.decorators.cache import patch_cache_control
 
-DISABLE_LAST_MODIFIED_MIDDLEWARE = getattr(settings, 'DISABLE_LAST_MODIFIED_MIDDLEWARE', False)
 DISABLE_CACHE_CONTROL_MIDDLEWARE = getattr(settings, 'DISABLE_CACHE_CONTROL_MIDDLEWARE', False)
-LAST_MODIFIED_FUNC               = getattr(settings, 'LAST_MODIFIED_FUNC', None)
 CACHE_MAX_AGE                    = getattr(settings, 'CACHE_MAX_AGE', 3600) # one hour
 CACHE_SHARED_MAX_AGE             = getattr(settings, 'CACHE_SHARED_MAX_AGE', CACHE_MAX_AGE)
 
