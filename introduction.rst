@@ -1,3 +1,6 @@
+Introduction to HTTP caching
+============================
+
 django-last-modified enables you to do this::
 
     $ http -t example.com
