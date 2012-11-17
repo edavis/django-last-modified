@@ -81,7 +81,7 @@ while if there is it uses the new content.
 Installation
 ------------
 
-1) $ pip install django-last-modified
+1) ``$ pip install django-last-modified``
 
 2) Add ``CacheControlMiddleware`` and ``LastModifiedMiddleware``
    (located in last_modified.middleware) to MIDDLEWARE_CLASSES.
