@@ -82,8 +82,8 @@ Installation
 
 1) ``$ pip install django-last-modified``
 
-2) Add ``CacheControlMiddleware`` and ``LastModifiedMiddleware``
-   (located in last_modified.middleware) to MIDDLEWARE_CLASSES.
+2) Add ``CacheControlMiddleware`` and ``LastModifiedMiddleware`` to
+   MIDDLEWARE_CLASSES.
 
 ``CacheControlMiddleware`` adds the Cache-Control and Expires headers
 to outgoing responses while ``LastModifiedMiddleware`` adds the
