@@ -86,9 +86,9 @@ Installation
 2) Add ``CacheControlMiddleware`` and ``LastModifiedMiddleware``
    (located in last_modified.middleware) to MIDDLEWARE_CLASSES.
 
-``CacheControlMiddleware`` adds the Cache-Control and Expires HTTP
-headers to outgoing responses while ``LastModifiedMiddleware`` adds
-Last-Modified and performs the If-Modified-Since checking.
+``CacheControlMiddleware`` adds the Cache-Control and Expires headers
+to outgoing responses while ``LastModifiedMiddleware`` adds the
+Last-Modified header and performs the If-Modified-Since checking.
 
 django-last-modified doesn't need to be added to INSTALLED_APPS.
 
