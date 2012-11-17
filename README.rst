@@ -7,7 +7,7 @@ manage your caching setup.
 Introduction
 ------------
 
-It enables you to do this::
+django-last-modified enables you to do this::
 
     $ http -t example.com
     HTTP/1.1 200 OK
