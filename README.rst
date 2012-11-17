@@ -134,11 +134,10 @@ Django has two features *like* this, but they're slightly different.
 
 The `update and fetch
 <https://docs.djangoproject.com/en/1.4/topics/cache/#the-per-site-cache>`_
-``django.middleware.cache`` middleware sets the Cache-Control,
-Expires, and Last-Modified headers but in the process also stores the
-generated pages in the server-side cache. The project I was working on
-had many thousand "long-tail" pages that I didn't want/need polluting
-any caches.
+cache middleware sets the Cache-Control, Expires, and Last-Modified
+headers but in the process also stores the generated pages in the
+server-side cache. The project I was working on had many thousand
+"long-tail" pages that I didn't want/need polluting any caches.
 
 There's also "`conditional view processing
 <https://docs.djangoproject.com/en/1.4/topics/conditional-view-processing/>`_"
