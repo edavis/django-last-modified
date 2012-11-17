@@ -65,10 +65,9 @@ about this is it saves CPU cycles and bandwidth as no page is
 generated or even transmitted.
 
 How does django-last-modified know what to return for the
-Last-Modified value? Create a function and specify the function location
-in LAST_MODIFIED_FUNC. The datetime/date object this function returns
-will be your Last-Modified value. So, for example, a blog could return
-the timestamp of your latest blog post::
+Last-Modified value? It uses the datetime/date object returned from
+the function defined in LAST_MODIFIED_FUNC. So, for example, a blog
+could return the timestamp of your latest blog post::
 
     # post/utils.py
     from post.models import Post
