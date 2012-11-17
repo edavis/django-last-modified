@@ -123,23 +123,31 @@ CACHE_SHARED_MAX_AGE
   CACHE_MAX_AGE.
 
 DISABLE_CACHE_CONTROL_MIDDLEWARE, DISABLE_LAST_MODIFIED_MIDDLEWARE
-  Set to True to disable the respective middleware. Provided so
-  you can toggle middleware off/on without having to tweak
-  MIDDLEWARE_CLASSES. *Default:* False.
+  Set to True to disable the respective middleware from being
+  applied. Provided so you can toggle middleware off/on without having
+  to tweak MIDDLEWARE_CLASSES. *Default:* False.
 
-TODO
-----
+Doesn't Django already have this?
+---------------------------------
 
-- DISABLE_* exist so you can fine tune whether to leave it on in
-  development, staging and production without tweaking MIDDLEWARE_CLASSES.
+Django has two features *like* this, but they're slightly different.
 
-- Django has CacheMiddleware but in addition to adding Cache-Control
-  headers, it stores representations in CACHE (not good).
+The `update and fetch
+<https://docs.djangoproject.com/en/1.4/topics/cache/#the-per-site-cache>`_
+``django.middleware.cache`` middleware sets the Cache-Control,
+Expires, and Last-Modified headers but in the process also stores the
+generated pages in the server-side cache. The project I was working on
+had many thousand "long-tail" pages that I didn't want/need polluting
+any caches.
 
-- Conditional gets exist but a pain to wrap an entire site.
+There's also "`conditional view processing
+<https://docs.djangoproject.com/en/1.4/topics/conditional-view-processing/>`_"
+which is even closer to what I needed, but can only be applied on a
+per-view basis while I needed the whole site covered.
 
-- Originally used to set the Last-Modified timestamp to the
-  modification time of the project root. My deploy script would
-  'touch' the project root, restart the uwsgi process and all new
-  requests would start getting the new last-modified time (once
-  Cache-Control ran out. this is validation).
+In a nutshell, I wanted the whole site covered (like the cache
+middleware does) but only generating HTTP headers and not involving
+the server-side cache (like the conditional view processing).
+
+Unable to find an existing app to do this, django-last-modified was
+born.
