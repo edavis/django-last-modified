@@ -4,6 +4,9 @@ django-last-modified
 django-last-modified is a collection of Django middleware to help
 manage your caching setup.
 
+Introduction
+------------
+
 It enables you to do this::
 
     $ http -t example.com
@@ -19,7 +22,7 @@ Cache-Control, Expires, and Last-Modified.
 
 The Cache-Control header tells Bob's browser cache how long to
 consider its stored copy "fresh." In other words, how long to keep
-serving the cached version before it has to check with your server for
+serving the cached copy before it has to check with your server for
 a newer copy.
 
 The Expires header is just another way of expressing the Cache-Control
@@ -53,7 +56,9 @@ your server, "Has there been any updates since we last talked?"
 
 If there haven't been any updates, your server responds with "304 NOT
 MODIFIED." This tells Bob's browser, "Nope, nothing new. Keep using
-that cached copy but check back in an hour again."
+that cached copy but check back again in an hour." The nice thing
+about this is it saves CPU cycles (the page doesn't have to be
+generated) and bandwidth (the page isn't even sent).
 
 But let's say there was some new content. In that case, it would go
 something like this::
@@ -69,47 +74,32 @@ With this, your server is saying, "Yeah, there has been new
 content. Get rid of that old cached copy and use this."
 
 From here, the cycle would repeat. Bob's browser cache would use this
-copy for the next hour and once that hour is up checks with your
+new copy for the next hour and once that hour is up checks with your
 server. If there isn't new content it keeps using the cached copy
 while if there is it uses the new content.
-
-Summary
--------
-
-CacheControlMiddleware sets Cache-Control and Expires headers
-
-LastModifiedMiddlware sets Last-Modified header and returns HTTP
-status code 304 (Not Modified) (saving bandwidth) when
-If-Modified-Since header is sent in request.
-
-``last_modified.middleware.CacheControlMiddleware`` adds
-``Cache-Control`` and ``Expires`` HTTP headers to outgoing
-responses. These headers tell private (e.g., browser) and public
-(e.g., ISP) caches how long to consider their stored representations
-as "fresh."
-
-``last_modified.middleware.LastModifiedMiddleware`` sets
-``Last-Modified`` and checks ``If-Modified-Since`` HTTP headers. These
-headers save bandwidth by only transferring data when content on your
-site has changed.
 
 Installation
 ------------
 
-1) ``$ pip install django-last-modified``
+1) $ pip install django-last-modified
 
 2) Add ``CacheControlMiddleware`` and ``LastModifiedMiddleware``
-   (located in ``last_modified.middleware``) to ``MIDDLEWARE_CLASSES`` as
-   appropriate.
+   (located in last_modified.middleware) to MIDDLEWARE_CLASSES.
 
-Settings
---------
+``CacheControlMiddleware`` adds the Cache-Control and Expires HTTP
+headers to outgoing responses while ``LastModifiedMiddleware`` adds
+Last-Modified and performs the If-Modified-Since checking.
+
+django-last-modified doesn't need to be added to INSTALLED_APPS.
+
+Configuration
+-------------
 
 LAST_MODIFIED_FUNC
-  String path to a function (e.g., ``path.to.module.function``) that
+  String path to a function (e.g., 'path.to.module.function') that
   is called to obtain the "last modified" value. Must return either a
-  ``datetime``/``date`` object or a UNIX timestamp. *Default:* ``None``,
-  must be defined.
+  datetime/date object or a UNIX timestamp. *Default:* None, must be
+  defined.
 
 CACHE_MAX_AGE
   Number of seconds stored representation is considered fresh for
@@ -120,18 +110,15 @@ CACHE_SHARED_MAX_AGE
   CACHE_MAX_AGE.
 
 DISABLE_CACHE_CONTROL_MIDDLEWARE, DISABLE_LAST_MODIFIED_MIDDLEWARE
-  Set to ``True`` to disable the respective middleware. Provided so
+  Set to True to disable the respective middleware. Provided so
   you can toggle middleware off/on without having to tweak
-  ``MIDDLEWARE_CLASSES``. *Default:* False.
+  MIDDLEWARE_CLASSES. *Default:* False.
 
-Explanation
------------
+TODO
+----
 
 - DISABLE_* exist so you can fine tune whether to leave it on in
   development, staging and production without tweaking MIDDLEWARE_CLASSES.
-
-- LAST_MODIFIED_FUNC needs to be set if you use either LastModified or
-  IfModifiedSince (and you should be using both)
 
 - Django has CacheMiddleware but in addition to adding Cache-Control
   headers, it stores representations in CACHE (not good).
@@ -143,6 +130,3 @@ Explanation
   'touch' the project root, restart the uwsgi process and all new
   requests would start getting the new last-modified time (once
   Cache-Control ran out. this is validation).
-
-- Add last_modified to INSTALLED_APPS to run the test suite. Not
-  necessary otherwise.
