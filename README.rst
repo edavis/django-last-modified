@@ -89,6 +89,20 @@ Installation
 to outgoing responses while ``LastModifiedMiddleware`` adds the
 Last-Modified header and performs the If-Modified-Since checking.
 
+Here's a recommended MIDDLEWARE_CLASSES order::
+
+    MIDDLEWARE_CLASSES = (
+        'django.middleware.common.CommonMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'last_modified.middleware.LastModifiedMiddleware',
+        'last_modified.middleware.CacheControlMiddleware',
+        # ... snip ...
+    )
+
+If a request is authenticated (i.e., the user has logged in) the
+If-Modified-Since checking is skipped.
+
 django-last-modified doesn't need to be added to INSTALLED_APPS.
 
 Configuration
