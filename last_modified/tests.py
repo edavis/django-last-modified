@@ -73,3 +73,4 @@ class TestLastModifiedMiddleware(TestCase):
         # one hour prior to what LAST_MODIFIED_FUNC returns
         response = self.client.get('/test/', HTTP_IF_MODIFIED_SINCE='Wed, 15 Feb 1989 14:30:34 GMT')
         self.assertEqual(response.status_code, 200)
+        self.assertEqual(response['Last-Modified'], 'Wed, 15 Feb 1989 15:30:34 GMT')
