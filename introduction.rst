@@ -1,8 +1,11 @@
 Introduction to HTTP caching
 ============================
 
-Let's start with a simple request to your site after installing
-django-last-modified::
+Initial request
+---------------
+
+Let's start with a simple request to your site after installing and
+configuring django-last-modified::
 
     $ http -t example.com
     HTTP/1.1 200 OK
@@ -34,6 +37,9 @@ your server.
 But what happens once that hour is up? This is where the Last-Modified
 header comes in.
 
+Validating the cached copy
+--------------------------
+
 Say it's been two hours and Bob wants to check out your site
 again. Bob's browser knows it can't keep serving its cached copy -- it
 could only do that for an hour -- so it has to check with your server
@@ -57,6 +63,9 @@ MODIFIED." This tells Bob's browser, "Nope, nothing new. Keep using
 that cached copy but check back again in an hour." The nice thing
 about this is it saves CPU cycles and bandwidth as no page is
 generated or even transmitted.
+
+New content
+-----------
 
 But let's say there was some new content. In that case, it would go
 something like this::
