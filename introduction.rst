@@ -9,8 +9,8 @@ configuring django-last-modified::
 
     $ http -t example.com
     HTTP/1.1 200 OK
-    Date: Sat, 17 Nov 2012 17:47:17 GMT
     Cache-Control: s-maxage=3600, max-age=3600
+    Date: Sat, 17 Nov 2012 17:47:17 GMT
     Expires: Sat, 17 Nov 2012 18:47:17 GMT
     Last-Modified: Fri, 16 Nov 2012 18:04:43 GMT
 
@@ -49,11 +49,11 @@ during the very first request::
 
     $ http -t example.com If-Modified-Since:"Fri, 16 Nov 2012 18:04:43 GMT"
     HTTP/1.1 304 NOT MODIFIED
-    Date: Sat, 17 Nov 2012 19:47:17 GMT
-    Last-Modified: Fri, 16 Nov 2012 18:04:43 GMT
-    Content-Length: 0
-    Date: Sat, 17 Nov 2012 20:47:17 GMT
     Cache-Control: s-maxage=3600, max-age=3600
+    Content-Length: 0
+    Date: Sat, 17 Nov 2012 19:47:17 GMT
+    Expires: Sat, 17 Nov 2012 20:47:17 GMT
+    Last-Modified: Fri, 16 Nov 2012 18:04:43 GMT
 
 By including the If-Modified-Since header, Bob's browser is asking
 your server, "Has there been any updates since we last talked?"
@@ -85,10 +85,10 @@ something like this::
 
     $ http -t example.com If-Modified-Since:"Fri, 16 Nov 2012 18:04:43 GMT"
     HTTP/1.1 200 OK
-    Date: Sat, 17 Nov 2012 19:47:17 GMT
-    Last-Modified: Sat, 17 Nov 2012 17:50:00 GMT
-    Date: Sat, 17 Nov 2012 20:47:17 GMT
     Cache-Control: s-maxage=3600, max-age=3600
+    Date: Sat, 17 Nov 2012 19:47:17 GMT
+    Expires: Sat, 17 Nov 2012 20:47:17 GMT
+    Last-Modified: Sat, 17 Nov 2012 17:50:00 GMT
 
 With this, your server is saying, "Yeah, there has been new
 content. Get rid of that old cached copy and use this."
