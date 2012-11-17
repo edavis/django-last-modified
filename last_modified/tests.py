@@ -22,7 +22,6 @@ LAST_MODIFIED_MIDDLEWARE_CLASSES = [
     'last_modified.middleware.LastModifiedMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'last_modified.middleware.LastModifiedMiddleware',
 ]
 
 @override_settings(MIDDLEWARE_CLASSES=CACHE_CONTROL_MIDDLEWARE_CLASSES)
