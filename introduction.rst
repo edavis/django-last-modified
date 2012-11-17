@@ -64,6 +64,20 @@ that cached copy but check back again in an hour." The nice thing
 about this is it saves CPU cycles and bandwidth as no page is
 generated or even transmitted.
 
+How does django-last-modified know what to return for the
+Last-Modified value? Create a function and specify the function location
+in LAST_MODIFIED_FUNC. The datetime/date object this function returns
+will be your Last-Modified value. So, for example, a blog could return
+the timestamp of your latest blog post::
+
+    # post/utils.py
+    from post.models import Post
+    def latest_timestamp():
+        return Post.objects.latest('pub_date').pub_date
+
+    # settings.py
+    LAST_MODIFIED_FUNC = 'post.utils.latest_timestamp'
+
 New content
 -----------
 
