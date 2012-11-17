@@ -86,7 +86,7 @@ something like this::
     $ http -t example.com If-Modified-Since:"Fri, 16 Nov 2012 18:04:43 GMT"
     HTTP/1.1 200 OK
     Date: Sat, 17 Nov 2012 19:47:17 GMT
-    Last-Modified: Sat, 17 Nov 2012 17:30:00 GMT
+    Last-Modified: Sat, 17 Nov 2012 17:50:00 GMT
     Date: Sat, 17 Nov 2012 20:47:17 GMT
     Cache-Control: s-maxage=3600, max-age=3600
 
