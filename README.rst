@@ -57,8 +57,8 @@ your server, "Has there been any updates since we last talked?"
 If there haven't been any updates, your server responds with "304 NOT
 MODIFIED." This tells Bob's browser, "Nope, nothing new. Keep using
 that cached copy but check back again in an hour." The nice thing
-about this is it saves CPU cycles (the page doesn't have to be
-generated) and bandwidth (the page isn't even sent).
+about this is it saves CPU cycles and bandwidth as no page is
+generated or even transmitted.
 
 But let's say there was some new content. In that case, it would go
 something like this::
