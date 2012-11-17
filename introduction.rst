@@ -11,6 +11,9 @@ django-last-modified::
     Expires: Sat, 17 Nov 2012 18:47:17 GMT
     Last-Modified: Fri, 16 Nov 2012 18:04:43 GMT
 
+(Note: ``http`` comes from the `httpie
+<http://pypi.python.org/pypi/httpie>`_ package.)
+
 The first time a user -- let's call him Bob -- connects to your site,
 django-last-modified adds three HTTP headers to his response:
 Cache-Control, Expires, and Last-Modified.
