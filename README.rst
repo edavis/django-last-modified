@@ -75,8 +75,7 @@ content. Get rid of that old cached copy and use this."
 
 From here, the cycle would repeat. Bob's browser cache would use this
 new copy for the next hour and once that hour is up checks with your
-server. If there isn't new content it keeps using the cached copy
-while if there is it uses the new content.
+server.
 
 Installation
 ------------
