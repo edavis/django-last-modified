@@ -1,7 +1,8 @@
 Introduction to HTTP caching
 ============================
 
-django-last-modified enables you to do this::
+Let's start with a simple request to your site after installing
+django-last-modified::
 
     $ http -t example.com
     HTTP/1.1 200 OK
