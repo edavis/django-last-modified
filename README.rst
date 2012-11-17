@@ -4,6 +4,9 @@ django-last-modified
 django-last-modified is a collection of Django middleware to add
 freshness and validation caching headers.
 
+Summary
+-------
+
 ``last_modified.middleware.CacheControlMiddleware`` adds
 ``Cache-Control`` and ``Expires`` HTTP headers to outgoing
 responses. These headers tell private (e.g., browser) and public
