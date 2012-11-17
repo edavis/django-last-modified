@@ -48,3 +48,23 @@ DISABLE_CACHE_CONTROL_MIDDLEWARE, DISABLE_LAST_MODIFIED_MIDDLEWARE
   Set to ``True`` to disable the respective middleware. Provided so
   you can toggle middleware off/on without having to tweak
   ``MIDDLEWARE_CLASSES``. *Default:* False.
+
+Explanation
+-----------
+
+- DISABLE_* exist so you can fine tune whether to leave it on in
+  development, staging and production without tweaking MIDDLEWARE_CLASSES.
+
+- LAST_MODIFIED_FUNC needs to be set if you use either LastModified or
+  IfModifiedSince (and you should be using both)
+
+- Django has CacheMiddleware but in addition to adding Cache-Control
+  headers, it stores representations in CACHE (not good).
+
+- Conditional gets exist but a pain to wrap an entire site.
+
+- Originally used to set the Last-Modified timestamp to the
+  modification time of the project root. My deploy script would
+  'touch' the project root, restart the uwsgi process and all new
+  requests would start getting the new last-modified time (once
+  Cache-Control ran out. this is validation).
