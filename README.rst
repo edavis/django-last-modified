@@ -1,11 +1,60 @@
 django-last-modified
 ====================
 
-django-last-modified is a collection of Django middleware to add
-freshness and validation caching headers.
+django-last-modified is a collection of Django middleware to help
+manage your caching setup.
+
+It enables you to do this::
+
+    $ http -t example.com
+    HTTP/1.1 200 OK
+    Date: Sat, 17 Nov 2012 17:47:17 GMT
+    Cache-Control: s-maxage=3600, max-age=3600
+    Expires: Sat, 17 Nov 2012 18:47:17 GMT
+    Last-Modified: Fri, 16 Nov 2012 18:04:43 GMT
+
+The first time a user -- let's call him Bob -- connects to your site,
+django-last-modified adds three HTTP headers to his response:
+Cache-Control, Expires, and Last-Modified.
+
+The Cache-Control header tells Bob's browser cache how long to
+consider its stored copy "fresh." In other words, how long to keep
+serving the cached version before it has to check with your server for
+a newer copy.
+
+The Expires header is just another way of expressing the Cache-Control
+information. It's included for completeness even though Cache-Control
+has largely superceded it.
+
+With Cache-Control and Expires set to one hour, that's how long Bob's
+browser cache will keep serving him its stored copy.
+
+But what happens once that hour is up? This is where the Last-Modified
+header comes in.
+
+Say it's been two hours and Bob wants to check out your site
+again. Bob's browser knows it can't keep serving its cached copy -- it
+could only do that for an hour -- so it has to check with your server
+before doing anything. But this time, it includes a special header --
+If-Modified-Since -- set to the value of Last-Modified as returned
+during the very first request::
+
+    $ http -t example.com If-Modified-Since:"Fri, 16 Nov 2012 18:04:43 GMT"
+    HTTP/1.1 304 NOT MODIFIED
+    Date: Sat, 17 Nov 2012 17:48:11 GMT
+    Last-Modified: Fri, 16 Nov 2012 18:04:43 GMT
+    Content-Length: 0
+    Expires: Sat, 17 Nov 2012 18:48:11 GMT
+    Cache-Control: s-maxage=3600, max-age=3600
 
 Summary
 -------
+
+CacheControlMiddleware sets Cache-Control and Expires headers
+
+LastModifiedMiddlware sets Last-Modified header and returns HTTP
+status code 304 (Not Modified) (saving bandwidth) when
+If-Modified-Since header is sent in request.
 
 ``last_modified.middleware.CacheControlMiddleware`` adds
 ``Cache-Control`` and ``Expires`` HTTP headers to outgoing
@@ -68,3 +117,6 @@ Explanation
   'touch' the project root, restart the uwsgi process and all new
   requests would start getting the new last-modified time (once
   Cache-Control ran out. this is validation).
+
+- Add last_modified to INSTALLED_APPS to run the test suite. Not
+  necessary otherwise.
