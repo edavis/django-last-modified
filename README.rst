@@ -1,6 +1,9 @@
 django-last-modified
 ====================
 
+.. image:: https://secure.travis-ci.org/edavis/django-last-modified.png
+   :target: https://travis-ci.org/edavis/django-last-modified
+
 django-last-modified is a collection of Django middleware to help
 manage your caching setup.
 

@@ -1,0 +1,15 @@
+language: python
+
+python:
+  - "2.6"
+  - "2.7"
+
+install:
+  - "pip install ."
+  - "pip install --use-mirrors Django==1.4.2"
+
+script:
+  - "cd test_project/ && python manage.py test last_modified"
+
+notifications:
+  email: false
