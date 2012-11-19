@@ -72,27 +72,27 @@ class LastModifiedMiddleware(object):
         except AttributeError:
             pass
 
+    def _if_modified_since(self, value):
+        value = parse_http_date_safe(value)
+        return self.last_modified <= value
+
+    def _if_none_match(self, value):
+        return value == self.etag
+
     ###########################################################################
     def process_request(self, request):
         """
         Perform If-Modified-Since and If-None-Match checking.
         """
         if self._skip_cache_check(request):
-            return # skip everything below; continue processing
+            return # bail here and continue on
 
-        if_modified_since = request.META.get('HTTP_IF_MODIFIED_SINCE')
-        if_none_match = request.META.get('HTTP_IF_NONE_MATCH')
+        last_modified = request.META.get('HTTP_IF_MODIFIED_SINCE')
+        etag = request.META.get('HTTP_IF_NONE_MATCH')
 
-        if if_modified_since is not None:
-            if_modified_since = parse_http_date_safe(if_modified_since)
-
-        if if_modified_since is not None:
-            if self.last_modified <= if_modified_since:
-                return HttpResponseNotModified()
-
-        if if_none_match is not None:
-            if if_none_match == self.etag:
-                return HttpResponseNotModified()
+        if any([self._if_modified_since(last_modified),
+                self._if_none_match(etag)]):
+            return HttpResponseNotModified()
 
     def process_response(self, request, response):
         response['Last-Modified'] = http_date(self.last_modified)
