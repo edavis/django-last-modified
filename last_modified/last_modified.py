@@ -59,23 +59,26 @@ class LastModifiedMiddleware(object):
         value = http_date(self.last_modified)
         return '"%s"' % hashlib.md5(value).hexdigest()
 
+    def _skip_cache_check(self, request):
+        """
+        Return True if we should skip the If-Modified-Since or
+        If-None-Match checking.
+        """
+        # If a user is logged in, don't do If-Modified-Since or
+        # If-None-Match checking.
+        try:
+            if request.user.is_authenticated():
+                return True
+        except AttributeError:
+            pass
+
     ###########################################################################
     def process_request(self, request):
         """
-        Compare 'If-Modified-Since' to the last modified time.
-
-        The goal of this is to quickly return HttpResponseNotModified
-        if the value in 'If-Modified-Since' is greater than or equal
-        to the last modified datetime.
+        Perform If-Modified-Since and If-None-Match checking.
         """
-        # request.user only exists when auth middleware is active. If
-        # we can't find request.user, everyone is non-authenticated.
-        try:
-            # If request comes from an authenticated user, skip the rest
-            if request.user.is_authenticated():
-                return
-        except AttributeError:
-            pass
+        if self._skip_cache_check(request):
+            return # skip everything below; continue processing
 
         if_modified_since = request.META.get('HTTP_IF_MODIFIED_SINCE')
         if_none_match = request.META.get('HTTP_IF_NONE_MATCH')
