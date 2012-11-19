@@ -10,11 +10,12 @@ setup(
     license = "MIT",
     description = "Django middleware for adding freshness and validation cache headers",
     long_description = open('README.rst').read(),
-    keywords = 'cache, if-modified-since, last-modified, cache-control, expires',
+    keywords = 'cache, if-modified-since, last-modified, cache-control, expires, etag, if-none-match',
     classifiers = [
-        "Framework :: Django",
         "Development Status :: 4 - Beta",
+        "Framework :: Django",
         "Intended Audience :: Developers",
         "License :: OSI Approved :: MIT License",
+        "Topic :: Internet",
     ],
 )
