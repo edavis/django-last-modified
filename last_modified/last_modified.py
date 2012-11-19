@@ -1,3 +1,4 @@
+import hashlib
 import calendar
 import datetime
 from django.conf import settings
@@ -50,6 +51,11 @@ class LastModifiedMiddleware(object):
         value = self.last_modified_func()
         return self._convert_to_timestamp(value)
 
+    @property
+    def etag(self):
+        value = http_date(self.last_modified)
+        return '"%s"' % hashlib.md5(value).hexdigest()
+
     ###########################################################################
     def process_request(self, request):
         """
@@ -69,6 +75,7 @@ class LastModifiedMiddleware(object):
             pass
 
         if_modified_since = request.META.get('HTTP_IF_MODIFIED_SINCE')
+        if_none_match = request.META.get('HTTP_IF_NONE_MATCH')
 
         if if_modified_since is not None:
             if_modified_since = parse_http_date_safe(if_modified_since)
@@ -77,6 +84,11 @@ class LastModifiedMiddleware(object):
             if self.last_modified <= if_modified_since:
                 return HttpResponseNotModified()
 
+        if if_none_match is not None:
+            if if_none_match == self.etag:
+                return HttpResponseNotModified()
+
     def process_response(self, request, response):
         response['Last-Modified'] = http_date(self.last_modified)
+        response['ETag'] = self.etag
         return response
