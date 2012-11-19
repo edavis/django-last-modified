@@ -12,3 +12,7 @@ script: "cd test_project/ && python manage.py test last_modified"
 
 notifications:
   email: false
+
+branches:
+  only:
+    - master
