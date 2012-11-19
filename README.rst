@@ -95,3 +95,8 @@ the server-side cache (like the conditional view processing).
 
 Unable to find an existing app to do this, django-last-modified was
 born.
+
+LICENSE
+-------
+
+MIT
