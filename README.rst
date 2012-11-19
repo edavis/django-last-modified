@@ -7,10 +7,11 @@ django-last-modified
 django-last-modified is a collection of Django middleware to help
 manage your caching setup.
 
-If you're familiar with Cache-Control, Expires, Last-Modified, and
-If-Modified-Since HTTP headers, continue on. If you're not -- or are
-just looking for a refresher -- please read 'introduction.rst' in this
-repository for a good overview of HTTP caching.
+If you're familiar with Cache-Control, Expires, Last-Modified, ETag,
+If-None-Match and If-Modified-Since HTTP headers, continue on. If
+you're not -- or are just looking for a refresher -- please read
+'introduction.rst' in this repository for a good overview of HTTP
+caching.
 
 Installation
 ------------
@@ -22,7 +23,8 @@ Installation
 
 ``CacheControlMiddleware`` adds the Cache-Control and Expires headers
 to outgoing responses while ``LastModifiedMiddleware`` adds the
-Last-Modified header and performs the If-Modified-Since checking.
+Last-Modified/ETag header and performs the
+If-Modified-Since/If-None-Match checking.
 
 Here's a recommended MIDDLEWARE_CLASSES order::
 
