@@ -41,6 +41,9 @@ class LastModifiedMiddleware(object):
         return func
 
     def _convert_to_timestamp(self, value):
+        """
+        Convert value to UNIX timestamp.
+        """
         if isinstance(value, datetime.date):
             return calendar.timegm(value.utctimetuple())
         else:
