@@ -8,7 +8,7 @@ setup(
     packages = ["last_modified"],
     url = "http://github.com/edavis/django-last-modified",
     license = "MIT",
-    description = "Django middleware for adding freshness and validation cache headers",
+    description = "Django middleware to help manage your caching setup",
     long_description = open('README.rst').read(),
     keywords = 'cache, if-modified-since, last-modified, cache-control, expires, etag, if-none-match',
     classifiers = [
