@@ -18,8 +18,8 @@ If you're familiar with the following HTTP headers:
 
 You can probably skip down to "Installation."
 
-Otherwise, you can find a primer on HTTP caching located in
-"introduction.rst" in this repository.
+Otherwise, you can find a primer on HTTP caching located `here
+<https://github.com/edavis/django-last-modified/blob/master/introduction.rst>`_.
 
 Installation
 ------------
