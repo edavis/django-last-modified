@@ -34,7 +34,9 @@ to outgoing responses while ``LastModifiedMiddleware`` adds the
 Last-Modified/ETag header and performs the
 If-Modified-Since/If-None-Match checking.
 
-Here's a recommended MIDDLEWARE_CLASSES order::
+Here's a recommended MIDDLEWARE_CLASSES order:
+
+.. code-block:: python
 
     MIDDLEWARE_CLASSES = (
         'django.middleware.common.CommonMiddleware',
